@@ -1,0 +1,26 @@
+From 37090210dd3eca4eb56be277b1f687f108b0fe12 Mon Sep 17 00:00:00 2001
+From: Marco Contenti <marco.c@variscite.com>
+Date: Fri, 4 Jun 2021 15:00:14 +0200
+Subject: [PATCH 2/4] defconfig: add support for e-con AR1335AF camera on imx8
+
+Signed-off-by: Marco Contenti <marco.c@variscite.com>
+---
+ arch/arm64/configs/imx8_var_defconfig | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/configs/imx8_var_defconfig b/arch/arm64/configs/imx8_var_defconfig
+index fac1b70e5449..49355de48969 100644
+--- a/arch/arm64/configs/imx8_var_defconfig
++++ b/arch/arm64/configs/imx8_var_defconfig
+@@ -403,6 +403,8 @@ CONFIG_IMX8_MIPI_CSI2_YAV=m
+ CONFIG_VIDEO_MXC_CSI_CAMERA=y
+ CONFIG_MXC_MIPI_CSI=y
+ CONFIG_MXC_CAMERA_OV5640_MIPI_V2=y
++CONFIG_VIDEO_ECAM=y
++CONFIG_MXC_CAMERA_AR1335_AF=m
+ CONFIG_V4L_MEM2MEM_DRIVERS=y
+ CONFIG_VIDEO_OV5640=y
+ # CONFIG_CXD2880_SPI_DRV is not set
+-- 
+2.33.0
+

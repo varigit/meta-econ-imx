@@ -1,0 +1,218 @@
+From 733c6ce04cf4c362ecaae9fb05a076b6ef097b73 Mon Sep 17 00:00:00 2001
+From: Marco Contenti <marco.c@variscite.com>
+Date: Wed, 23 Jun 2021 13:22:54 +0200
+Subject: [PATCH 4/4] devicetree: add e-con camera support to imx8mm-var-dart
+
+create new dtb files for each SOM variant with e-con camera
+
+Signed-off-by: Marco Contenti <marco.c@variscite.com>
+---
+ arch/arm64/boot/dts/freescale/Makefile        |  4 +-
+ .../fsl-imx8mm-var-som-econ-camera.dts        |  2 +
+ .../fsl-imx8mm-var-som-econ-camera.dtsi       | 56 +++++++++++++++++++
+ ...m-var-dart-dt8mcustomboard-econ-camera.dts |  7 +++
+ ...art-dt8mcustomboard-legacy-econ-camera.dts |  7 +++
+ .../freescale/imx8mm-var-som-econ-camera.dtsi | 55 ++++++++++++++++++
+ .../imx8mm-var-som-symphony-econ-camera.dts   |  2 +
+ ...mm-var-som-symphony-legacy-econ-camera.dts |  2 +
+ 8 files changed, 134 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/freescale/fsl-imx8mm-var-som-econ-camera.dts
+ create mode 100644 arch/arm64/boot/dts/freescale/fsl-imx8mm-var-som-econ-camera.dtsi
+ create mode 100644 arch/arm64/boot/dts/freescale/imx8mm-var-dart-dt8mcustomboard-econ-camera.dts
+ create mode 100644 arch/arm64/boot/dts/freescale/imx8mm-var-dart-dt8mcustomboard-legacy-econ-camera.dts
+ create mode 100644 arch/arm64/boot/dts/freescale/imx8mm-var-som-econ-camera.dtsi
+ create mode 100644 arch/arm64/boot/dts/freescale/imx8mm-var-som-symphony-econ-camera.dts
+ create mode 100644 arch/arm64/boot/dts/freescale/imx8mm-var-som-symphony-legacy-econ-camera.dts
+
+diff --git a/arch/arm64/boot/dts/freescale/Makefile b/arch/arm64/boot/dts/freescale/Makefile
+index f5ccda9c7a69..713190842205 100644
+--- a/arch/arm64/boot/dts/freescale/Makefile
++++ b/arch/arm64/boot/dts/freescale/Makefile
+@@ -58,8 +58,10 @@ dtb-$(CONFIG_ARCH_MXC) += imx8mm-evk-8mic-revE.dtb imx8mm-evk-8mic-swpdm.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mm-ab2.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mm-var-dart-dt8mcustomboard.dtb imx8mm-var-dart-dt8mcustomboard-legacy.dtb \
+ 			  imx8mm-var-dart-dt8mcustomboard-m4.dtb imx8mm-var-dart-dt8mcustomboard-legacy-m4.dtb \
++			  imx8mm-var-dart-dt8mcustomboard-econ-camera.dtb imx8mm-var-dart-dt8mcustomboard-legacy-econ-camera.dtb \
+ 			  imx8mm-var-som-symphony.dtb imx8mm-var-som-symphony-legacy.dtb \
+-			  imx8mm-var-som-symphony-m4.dtb imx8mm-var-som-symphony-legacy-m4.dtb
++			  imx8mm-var-som-symphony-m4.dtb imx8mm-var-som-symphony-legacy-m4.dtb \
++			  imx8mm-var-som-symphony-econ-camera.dtb imx8mm-var-som-symphony-legacy-econ-camera.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mn-evk.dtb imx8mn-evk-rm67191.dtb imx8mn-ddr4-evk.dtb imx8mn-ddr4-evk-ak5558.dtb \
+ 			  imx8mn-ddr4-evk-rm67191.dtb imx8mn-ddr4-evk-rpmsg.dtb imx8mn-ddr4-evk-usd-wifi.dtb \
+ 			  imx8mn-evk-ak5558.dtb imx8mn-evk-rpmsg.dtb \
+diff --git a/arch/arm64/boot/dts/freescale/fsl-imx8mm-var-som-econ-camera.dts b/arch/arm64/boot/dts/freescale/fsl-imx8mm-var-som-econ-camera.dts
+new file mode 100644
+index 000000000000..ff40e64e04b2
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/fsl-imx8mm-var-som-econ-camera.dts
+@@ -0,0 +1,2 @@
++#include "fsl-imx8mm-var-som.dts"
++#include "fsl-imx8mm-var-som-econ-camera.dtsi"
+diff --git a/arch/arm64/boot/dts/freescale/fsl-imx8mm-var-som-econ-camera.dtsi b/arch/arm64/boot/dts/freescale/fsl-imx8mm-var-som-econ-camera.dtsi
+new file mode 100644
+index 000000000000..8cf05033df26
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/fsl-imx8mm-var-som-econ-camera.dtsi
+@@ -0,0 +1,56 @@
++/*
++ * Copyright 2018 NXP
++ * Copyright 2019-2020 Variscite Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ */
++
++&ov5640_mipi1 {
++	status = "disabled";
++};
++
++&i2c2 {
++	ar1335_af_mipi1: ar1335_af_mipi1@42 {
++		status = "okay";
++		compatible = "ar1335_af";
++		reg = <0x42>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_csi1>;
++		clocks = <&clk IMX8MM_CLK_CLKO1_DIV>;
++		clock-names = "csi_mclk";
++		csi_id = <0>;
++		pwn-gpios = <&gpio5 12 GPIO_ACTIVE_HIGH>;
++		rst-gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>;
++		mclk = <24000000>;
++		mclk_source = <0>;
++		port {
++			ar1335_af_mipi1_ep: endpoint {
++				remote-endpoint = <&mipi1_sensor_ep>;
++			};
++		};
++	};
++};
++
++&mipi1_sensor_ep {
++	remote-endpoint = <&ar1335_af_mipi1_ep>;
++	data-lanes = <4>;
++	csis-hs-settle = <23>;
++};
++
++&mipi_csi_1 {
++	clock-frequency = <550000000>;
++	/*assigned-clock-rates = <266000000>, <150000000>, <66000000>;*/
++};
++
++&csi1_bridge {
++	fsl,two-8bit-sensor-mode;
++	ar1335-csi-bridge;
++};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-var-dart-dt8mcustomboard-econ-camera.dts b/arch/arm64/boot/dts/freescale/imx8mm-var-dart-dt8mcustomboard-econ-camera.dts
+new file mode 100644
+index 000000000000..fd952fa9bcdf
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/imx8mm-var-dart-dt8mcustomboard-econ-camera.dts
+@@ -0,0 +1,7 @@
++#include "imx8mm-var-dart-dt8mcustomboard.dts"
++#include "imx8mm-var-som-econ-camera.dtsi"
++
++&ar1335_af_mipi1 {
++	pwn-gpios = <&pca6408_1 3 GPIO_ACTIVE_HIGH>;
++	rst-gpios = <&pca6408_1 1 GPIO_ACTIVE_LOW>;
++};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-var-dart-dt8mcustomboard-legacy-econ-camera.dts b/arch/arm64/boot/dts/freescale/imx8mm-var-dart-dt8mcustomboard-legacy-econ-camera.dts
+new file mode 100644
+index 000000000000..addeb5d1a089
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/imx8mm-var-dart-dt8mcustomboard-legacy-econ-camera.dts
+@@ -0,0 +1,7 @@
++#include "imx8mm-var-dart-dt8mcustomboard.dts"
++#include "imx8mm-var-som-econ-camera.dtsi"
++
++&ar1335_af_mipi1 {
++	pwn-gpios = <&gpio4 8 GPIO_ACTIVE_HIGH>;
++	rst-gpios = <&gpio5 28 GPIO_ACTIVE_HIGH>;
++};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-var-som-econ-camera.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-var-som-econ-camera.dtsi
+new file mode 100644
+index 000000000000..e3dd271db54b
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/imx8mm-var-som-econ-camera.dtsi
+@@ -0,0 +1,55 @@
++/*
++ * Copyright 2018 NXP
++ * Copyright 2019-2020 Variscite Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ */
++
++&ov5640_mipi1 {
++	status = "disabled";
++};
++
++&i2c2 {
++	ar1335_af_mipi1: ar1335_af_mipi1@42 {
++		status = "okay";
++		compatible = "ar1335_af";
++		reg = <0x42>;
++		clocks = <&clk IMX8MM_CLK_CLKO1>;
++		clock-names = "csi_mclk";
++		camera_mipi_lanes = <4>;
++		csi_id = <0>;
++		pwn-gpios = <&gpio5 12 GPIO_ACTIVE_HIGH>;
++		rst-gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>;
++		mclk = <24000000>;
++		mclk_source = <0>;
++		port {
++			ar1335_af_mipi1_ep: endpoint {
++				remote-endpoint = <&mipi1_sensor_ep>;
++			};
++		};
++	};
++};
++
++&mipi1_sensor_ep {
++	remote-endpoint = <&ar1335_af_mipi1_ep>;
++	data-lanes = <4>;
++	pixel-mode = <1>;
++	csis-hs-settle = <23>;
++};
++
++&mipi_csi_1 {
++	clock-frequency = <550000000>;
++};
++
++&csi1_bridge {
++	fsl,two-8bit-sensor-mode;
++	cam-csi-bridge;
++};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-var-som-symphony-econ-camera.dts b/arch/arm64/boot/dts/freescale/imx8mm-var-som-symphony-econ-camera.dts
+new file mode 100644
+index 000000000000..6916066cd9cc
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/imx8mm-var-som-symphony-econ-camera.dts
+@@ -0,0 +1,2 @@
++#include "imx8mm-var-som-symphony.dts"
++#include "imx8mm-var-som-econ-camera.dtsi"
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-var-som-symphony-legacy-econ-camera.dts b/arch/arm64/boot/dts/freescale/imx8mm-var-som-symphony-legacy-econ-camera.dts
+new file mode 100644
+index 000000000000..8ed32804f2c1
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/imx8mm-var-som-symphony-legacy-econ-camera.dts
+@@ -0,0 +1,2 @@
++#include "imx8mm-var-som-symphony-legacy.dts"
++#include "imx8mm-var-som-econ-camera.dtsi"
+-- 
+2.33.0
+
