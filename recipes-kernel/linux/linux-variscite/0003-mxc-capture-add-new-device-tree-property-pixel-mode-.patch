@@ -1,7 +1,7 @@
 From ae009698017bf99bd58d60039495821419a51d6a Mon Sep 17 00:00:00 2001
 From: Marco Contenti <marco.c@variscite.com>
 Date: Wed, 23 Jun 2021 13:20:51 +0200
-Subject: [PATCH 3/4] mxc:capture: add new device tree property pixel-mode to
+Subject: [PATCH 3/5] mxc:capture: add new device tree property pixel-mode to
  port node
 
 Signed-off-by: Marco Contenti <marco.c@variscite.com>

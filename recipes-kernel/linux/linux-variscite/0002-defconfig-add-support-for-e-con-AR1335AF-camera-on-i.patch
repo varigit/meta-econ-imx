@@ -1,7 +1,7 @@
 From 37090210dd3eca4eb56be277b1f687f108b0fe12 Mon Sep 17 00:00:00 2001
 From: Marco Contenti <marco.c@variscite.com>
 Date: Fri, 4 Jun 2021 15:00:14 +0200
-Subject: [PATCH 2/4] defconfig: add support for e-con AR1335AF camera on imx8
+Subject: [PATCH 2/5] defconfig: add support for e-con AR1335AF camera on imx8
 
 Signed-off-by: Marco Contenti <marco.c@variscite.com>
 ---

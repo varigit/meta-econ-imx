@@ -1,7 +1,7 @@
 From 733c6ce04cf4c362ecaae9fb05a076b6ef097b73 Mon Sep 17 00:00:00 2001
 From: Marco Contenti <marco.c@variscite.com>
 Date: Wed, 23 Jun 2021 13:22:54 +0200
-Subject: [PATCH 4/4] devicetree: add e-con camera support to imx8mm-var-dart
+Subject: [PATCH 4/5] devicetree: add e-con camera support to imx8mm-var-dart
 
 create new dtb files for each SOM variant with e-con camera
 

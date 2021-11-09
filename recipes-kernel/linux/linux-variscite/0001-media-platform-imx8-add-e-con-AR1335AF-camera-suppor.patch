@@ -1,7 +1,7 @@
 From 1d44ccbdf31625847ad8f3e73e122a9fd2b09e6b Mon Sep 17 00:00:00 2001
 From: Marco Contenti <marco.c@variscite.com>
 Date: Fri, 4 Jun 2021 15:00:14 +0200
-Subject: [PATCH 1/4] media:platform:imx8: add e-con AR1335AF camera support
+Subject: [PATCH 1/5] media:platform:imx8: add e-con AR1335AF camera support
 
 Signed-off-by: Marco Contenti <marco.c@variscite.com>
 ---
